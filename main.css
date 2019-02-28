@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+    outline: solid 1px red;
+}
+
+main {
+    max-width: 800px;
+    margin: auto auto;
+    text-align: center;
+}
+
+legend {
+    visibility: hidden;
+}
+
+.game-form {
+    max-width: 100%;
+}
+
+.game-fieldset {
+    border: 0;
+    max-width: 100%;
+}
+
+.search-container {
+    margin: 25% 25% 30px 25%;
+    max-width: 50%;
+    max-height: 50%;
+    background-color: gray;
+}
+
+/* .game-fieldset {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+} */
+
+input.game-search, label.game-search {
+    max-width: 200px;
+    width: 100%;
+}
+
+/* @media (min-width: 480px) {
+    .game-search {
+        width: 400px;
+    }
+} */

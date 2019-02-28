@@ -5,15 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Should I Buy This Game?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    
 </head>
 <body>
-
+    <main>
+        <section role="search" class="search-container">
+            <form class="game-form">
+                
+                    <legend>Search for a game or keyword:</legend>
+                    <label for="game-search" class="game-search"></label>
+                    <input type="search" class="game-search" id="game-search" name="game-search" placeholder="Search for a game or keyword!" maxlength="100">
+                    <button type="submit" title="Submit search query">Comb through the ancient texts</button>
+                
+            </form>
+        </section>
+        <article class="search-results">
+            <ul>
+                <li>
+                    <h1>Game title</h1>
+                    <p>Genre(s) in a horizontal list</p>
+                    <p>Description</p>
+                    <p>Store links</p>
+                    <img src="https://via.placeholder.com/150?text=Placeholder+For+Embedded+Twitch+Video">
+                </li>
+            </ul>
+        </article>
+    </main>
 <script
 src="https://code.jquery.com/jquery-3.3.1.min.js"
 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 crossorigin="anonymous"></script>
-<script src="main.js"></script>
+<script src="scripts.js"></script>
 </body>
 </html>

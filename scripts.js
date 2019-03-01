@@ -20,6 +20,7 @@ function fetchGiantBomb(gameTitle) {
     fetch(`http://www.giantbomb.com/api/search/?api_key=${apiKey}&format=jsonp&json_callback=jsonp&query=${gameTitle}`, {mode: 'no-cors'})
     .then(response => response.json())
     .then(responseJson => console.log(responseJson))
+    // .then(data => console.log(JSON.stringify(data)))
     .catch(error => console.log(`ERROR: ${error}`));
 
     // Looks like I need json_callback to = a callback function?

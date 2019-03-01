@@ -3,8 +3,14 @@
 function submitButtonHandler() {
     $('.game-form').on('submit', function() {
         event.preventDefault();
-        console.log("Button works");
+        storeSearchTerm();
+        // console.log("Button works");
     });
+}
+
+function storeSearchTerm() {
+    let game = $('#game-search').val().trim();
+    console.log(game);
 }
 
 $(submitButtonHandler());

@@ -18,17 +18,24 @@ function handleGameSearch() {
 
 function fetchIgdb(gameTitle) {
     const options = {
-        headers: {
+        method: 'GET',
+        header: {
             'user-key': '142f6aed468c4dbcd5e740fd58fc0b12',
-            accept: 'json'
+            'accept': 'json'
         },
         mode: 'no-cors'
     };
 
-    fetch(`https://api-v3.igdb.com/games/?search=bioshock&fields=name,websites.url,genres.name,rating`, options)
-    .then(response => response.json())
-    .then(responseJson => console.log(responseJson))
-    .catch(e => { console.log("Error: ", e); });
+    console.log('fetch: ' + gameTitle);
+    fetch('https://api-v3.igdb.com/games/?search=bioshock&fields=name,websites.url,genres.name,rating', options)
+    .then(response => {
+        return response.text()
+    })
+    .then((data) => {
+        data ? console.log(JSON.parse(data)) : {}
+    })
+    // .then(responseJson => console.log(responseJson));
+    .catch(error => { console.log("Error: ", error); });
 }
 
-$(submitButtonHandler());
+$(submitButtonHandler);

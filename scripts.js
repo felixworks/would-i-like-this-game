@@ -4,38 +4,37 @@ function submitButtonHandler() {
     $('.game-form').on('submit', function() {
         event.preventDefault();
         handleGameSearch();
-        console.log('Button works');
     });
 }
 
 function handleGameSearch() {
     let gameTitle = $('#game-search').val().trim().toLowerCase();
-    console.log('Searched for: ' + gameTitle);
     $('#game-search').val('');
-    fetchIgdb(gameTitle);
+    // fetchIgdb(gameTitle);
+    fetchGiantBomb(gameTitle);
     // FELIX: call your Twitch API function here?
 }
 
-function fetchIgdb(gameTitle) {
-    const options = {
-        method: 'GET',
-        header: {
-            'user-key': '142f6aed468c4dbcd5e740fd58fc0b12',
-            'accept': 'json'
-        },
-        mode: 'no-cors'
-    };
+function fetchGiantBomb(gameTitle) {
+    const apiKey = `fec6b7750ced7ec24e9ff54a9b2aeea2b573d5a8`;
 
-    console.log('fetch: ' + gameTitle);
-    fetch('https://api-v3.igdb.com/games/?search=bioshock&fields=name,websites.url,genres.name,rating', options)
-    .then(response => {
-        return response.text()
-    })
-    .then((data) => {
-        data ? console.log(JSON.parse(data)) : {}
-    })
+    $.ajax ({
+        type: 'GET',
+        dataType: 'jsonp',
+        crossDomain: true,
+        jsonp: 'json_callback',
+        url: `http://www.giantbomb.com/api/search/?format=jsonp&api_key=${apiKey}&query=${gameTitle}`,
+        complete: function() {
+            console.log('done');
+        },
+        success: function(data) {
+            console.log(data);
+        }
+    });
+
+    // fetch(`https://www.giantbomb.com/api/search/?api_key=${apiKey}&format=json&query=${gameTitle}`, {mode: 'no-cors'})
+    // .then(response => response.json())
     // .then(responseJson => console.log(responseJson));
-    .catch(error => { console.log("Error: ", error); });
 }
 
 $(submitButtonHandler);

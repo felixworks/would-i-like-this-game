@@ -6,15 +6,24 @@ function submitButtonHandler() {
         console.log("Button works");
         let userInput = $('input.game-search').val();
         // console.log(userInput);
+        $('input.game-search').val('');
+        $('.twitch-clip-results').empty();
         generateTwitchRequest(userInput);
-        $('input.game-search').empty();
+        
     });
 }
 
-function createTwitchUrl(userInput) {
+function createTwitchIdUrl(userInput) {
     let modifiedUserInput = encodeURIComponent(userInput);
     let requestUrl = `https://api.twitch.tv/helix/games?name=${modifiedUserInput}`;
-    // console.log(requestUrl);
+    console.log('idRequestUrl', requestUrl);
+    return requestUrl;
+}
+
+function createTwitchClipUrl(response) {
+    let modifiedResponse = encodeURIComponent(response);
+    let requestUrl = `https://api.twitch.tv/helix/clips?game_id=${modifiedResponse}`;
+    console.log('clip request URL', requestUrl);
     return requestUrl;
 }
 
@@ -24,25 +33,41 @@ function generateTwitchRequest(userInput) {
             'Client-id': 'lzvscy091kgp5i7muvi8xhpd9uo5dc'
         }
     };
-    fetch(createTwitchUrl(userInput), options)
+
+    fetch(createTwitchIdUrl(userInput), options)
     .then(response => {
         if (response.ok) {
             return response.json();
         }
         throw new Error(response.statusTest);
     })
-    .then(responseJson => displayTwitchResults(responseJson))
-    .catch(error => $('.twitch-results').empty().append('Something went wrong: ' + error.message));
+    .then(responseJson => {
+        console.log(responseJson.data.length);
+        if (responseJson.data.length > 0) {
+            return responseJson.data[0].id;
+        }   
+        throw new Error("No results");
+    })
+    // .then(twitchId => console.log('TwitchID', twitchId))
+    .then(twitchId => createTwitchClipUrl(twitchId))
+    .then(clipUrl => fetch(clipUrl, options))
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error(response.statusTest);
+    })
+    // .then(responseJson => console.log('Twitch clip', responseJson))
+    .then(responseJson => displayTwitchClip(responseJson))
+    .catch(error => $('.twitch-clip-results').empty().append('Something went wrong: ' + error.message));
 }
 
-function displayTwitchResults(responseJson) {
-    $('.twitch-results').empty();
-    // returns game id - plug this into another fetch request that calls "GET https://api.twitch.tv/helix/clips" Also figure out whether you can string two fetch requests together. Or how that should work.
-    console.log(responseJson.data[0].id);
-    let twitchInformation = responseJson.data[0].id;
+function displayTwitchClip(responseJson) {
+    console.log('from displayTwitchClip', responseJson.data[0].id)
+    let clipId = responseJson.data[0].id;
     let results = `
     <iframe
-    src="${twitchInformation}"
+    src="https://clips.twitch.tv/embed?clip=${clipId}&autoplay=false"
     height="360"
     width="640"
     frameborder="0"
@@ -50,6 +75,6 @@ function displayTwitchResults(responseJson) {
     allowfullscreen="true">
     </iframe>`;
     // console.log(results);
-    $('.twitch-results').append(results);
+    $('.twitch-clip-results').append(results);
 }
 $(submitButtonHandler());

@@ -5,38 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Should I Buy This Game?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Frank+Ruhl+Libre|Open+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
 </head>
 <body>
     <main>
+        <header>
+            <h1>Should I Buy This Game?</h1>
+        </header>
+        <section class="page-blurb">
+            <p>Unsure whether you'd enjoy a certain game? We'll help you decide!</p>
+        </section>
         <section role="search" class="search-container">
             <form class="game-form">
                 <legend>Search for a game or keyword:</legend>
                 <label for="game-search" class="game-search"></label>
-                <input type="search" class="game-search" id="game-search" name="game-search" placeholder="Search for a game or keyword!" maxlength="100">
+                <input type="search" class="game-search" id="game-search" name="game-search" placeholder="Search for a game or keyword!" required>
                 <button type="submit" title="Submit search query">Comb through the ancient texts</button>
             </form>
         </section>
-        <article class="igdb-results">
-            <ul>
-                <li>
-                    <h1>Game title</h1>
-                    <p>Genre(s) in a horizontal list</p>
-                    <p>Description</p>
-                    <p>Store links</p>
-                </li>
-            </ul>
+        <article class="giantbomb-results">
+            <section class="giantbomb-info"></section>
+            <section class="giantbomb-review"></section>
         </article>
         <article class="twitch-clip-results">
         </article>
         <article class ="twitch-stream-results">
         </article>
     </main>
-<script
-src="https://code.jquery.com/jquery-3.3.1.min.js"
-integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-crossorigin="anonymous"></script>
+    <footer>
+        <p>Created by <a href="https://felixworks.github.io/portfolio/" target="_blank">Felix Meyer</a> & <a href="https://charlotteshih.github.io/portfolio/" target="_blank">Charlotte Shih</a> using <a href="https://www.giantbomb.com/api/" taget="_blank">GiantBomb API</a> & <a href="https://dev.twitch.tv/" target="_blank">Twitch API</a>.</p>
+    </footer>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="scripts.js"></script>
 </body>
 </html>

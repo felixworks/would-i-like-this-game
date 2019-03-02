@@ -1,12 +1,31 @@
 * {
     box-sizing: border-box;
-    outline: solid 1px red;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.5rem;
 }
 
 main {
     max-width: 800px;
-    margin: auto auto;
+    margin: 100px auto;
     text-align: center;
+}
+
+header {
+    /* margin-top: 100px; */
+}
+
+h1 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 4rem;
+    font-weight: bold;
+    line-height: 5rem;
+}
+
+.page-blurb {
+    font-size: 1.4rem;
 }
 
 legend {
@@ -18,7 +37,7 @@ legend {
 }
 
 .search-container {
-    margin: 25% 25% 30px 25%;
+    margin: 30px 25%;
     max-width: 50%;
     max-height: 50%;
     background-color: gray;

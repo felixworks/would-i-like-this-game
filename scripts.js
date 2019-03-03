@@ -93,7 +93,7 @@ function displayGameInfo(gameTitle) {
         dataType: 'jsonp',
         crossDomain: true,
         jsonp: 'json_callback',
-        url: `http://www.giantbomb.com/api/search/?format=jsonp&api_key=${apiGiantBomb}&query=${gameTitle}`,
+        url: `https://www.giantbomb.com/api/search/?format=jsonp&api_key=${apiGiantBomb}&query=${gameTitle}`,
         success: function(response) {
             renderGameInfo(response);
             listGamePlatforms(response);
@@ -110,7 +110,7 @@ function displayGameReviews(response) {
         dataType: 'jsonp',
         crossDomain: true,
         jsonp: 'json_callback',
-        url: `http://www.giantbomb.com/api/reviews/?format=jsonp&api_key=${apiGiantBomb}&filter=game:${gameId}&limit=5`,
+        url: `https://www.giantbomb.com/api/reviews/?format=jsonp&api_key=${apiGiantBomb}&filter=game:${gameId}&limit=5`,
         success: function(response) {
             console.log(response.results[0]);
             renderGameReviews(response);

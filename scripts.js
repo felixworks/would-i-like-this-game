@@ -7,8 +7,6 @@ function submitButtonHandler() {
         event.preventDefault();
         console.log("Button works");
         let userInput = $('input.game-search').val();
-        // console.log(userInput);
-        // $('input.game-search').val('');
         $('.twitch-clip-results').empty();
         generateTwitchRequest(userInput);
         handleGameSearch();

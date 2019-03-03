@@ -93,6 +93,7 @@ legend {
 input.game-search {
     width: 100%;
     padding: 20px;
+    line-height: 40px;
     font-size: 1.3rem;
 }
 
@@ -104,9 +105,15 @@ input.game-search {
     background-color: #000;
     color: #fff;
     text-transform: uppercase;
-    border: none;
+    border: 1px solid black;
     padding: 20px;
     width: 100%;
+    cursor: pointer;
+}
+
+.game-form button:hover, .game-form button:focus {
+    color: #000;
+    background-color: #fff;
 }
 
 footer {

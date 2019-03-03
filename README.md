@@ -1,6 +1,6 @@
 # SHOULD I BUY THIS GAME?
 
-- link to live app
+- https://felixworks.github.io/should-i-buy-this-game/
 - screenshots of app
 - summary
-- technology used
+- technologies used

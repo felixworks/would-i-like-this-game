@@ -10,7 +10,7 @@ body {
 
 main {
     max-width: 1200px;
-    margin: 100px auto;
+    margin: 30px auto;
     text-align: center;
     padding: 20px;
     background-color: #fff;
@@ -38,6 +38,10 @@ article.twitch-clip-results {
     clear: both;
 }
 
+header {
+    margin-top: 50px;
+}
+
 h1 {
     font-family: 'Frank Ruhl Libre', serif;
     font-size: 4rem;
@@ -59,7 +63,7 @@ h3 {
     line-height: 2rem;
 }
 
-p { padding-bottom: 0.6rem; }
+p { padding-bottom: 0.6rem; line-height: 1.6rem; }
 b { font-weight: bold; }
 i { font-style: italic; }
 u { text-decoration: underline; }
@@ -73,8 +77,9 @@ a:hover, a:focus {
     text-decoration: none;
 }
 
-.page-blurb {
+.page-blurb p {
     font-size: 1.4rem;
+    line-height: 2rem;
 }
 
 legend {
@@ -93,7 +98,6 @@ legend {
 input.game-search {
     width: 100%;
     padding: 20px;
-    line-height: 40px;
     font-size: 1.3rem;
 }
 

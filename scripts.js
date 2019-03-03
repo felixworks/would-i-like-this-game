@@ -68,6 +68,7 @@ function displayTwitchClip(responseJson) {
     console.log('from displayTwitchClip', responseJson.data[0].id)
     let clipId = responseJson.data[0].id;
     let results = `
+    <h2>Most Popular Twitch Clip:</h2>
     <iframe
     src="https://clips.twitch.tv/embed?clip=${clipId}&autoplay=false"
     height="100%"

@@ -5,40 +5,37 @@
 body {
     font-family: 'Open Sans', sans-serif;
     line-height: 1.5rem;
+    background-color: #eee;
 }
 
 main {
     max-width: 1200px;
     margin: 100px auto;
     text-align: center;
-    outline: 1px green solid;
+    padding: 20px;
+    background-color: #fff;
 }
 
 article.giantbomb-results {
     float: left;
     width: 50%;
-    outline: 1px blue solid;
-    padding: 18px;
+    padding: 20px;
     text-align: left;
+}
+
+.giantbomb-info {
+    margin-bottom: 1rem;
 }
 
 article.twitch-clip-results {
     float: right;
     width: 50%;
     height: 340px;
-    outline: 1px red solid;
-    position: relative;
-    overflow: hidden;
-    padding: 18px;
-    /* padding-top: 56.25%; */
+    padding: 20px;
 }
 
 .clear {
     clear: both;
-}
-
-header {
-    /* margin-top: 100px; */
 }
 
 h1 {
@@ -46,6 +43,34 @@ h1 {
     font-size: 4rem;
     font-weight: bold;
     line-height: 5rem;
+}
+
+h2 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 3rem;
+}
+
+h3 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 2rem;
+}
+
+p { padding-bottom: 0.6rem; }
+b { font-weight: bold; }
+i { font-style: italic; }
+u { text-decoration: underline; }
+
+a:link, a:visited {
+    color: #000;
+    font-weight: bold;
+}
+
+a:hover, a:focus {
+    text-decoration: none;
 }
 
 .page-blurb {
@@ -61,31 +86,42 @@ legend {
 }
 
 .search-container {
-    margin: 30px 25%;
-    max-width: 50%;
-    max-height: 50%;
-    background-color: gray;
+    margin: 20px auto;
+    width: 75%;
 }
 
-/* .game-fieldset {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: center;
-} */
+input.game-search {
+    width: 100%;
+    padding: 20px;
+    font-size: 1.3rem;
+}
 
-input.game-search, label.game-search {
-    max-width: 200px;
+.game-form button {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+    margin: 10px 0px;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    border: none;
+    padding: 20px;
     width: 100%;
 }
+
+footer {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0px auto;
+    text-align: center;
+}
+
+
+/* MEDIA QUERIES */
 
 @media (max-width: 768px) {
     article.giantbomb-results, article.twitch-clip-results {
         width: 100%;
-    }
-    
-    h1 {
-        color: red;
     }
 }
 

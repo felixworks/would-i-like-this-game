@@ -8,9 +8,33 @@ body {
 }
 
 main {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 100px auto;
     text-align: center;
+    outline: 1px green solid;
+}
+
+article.giantbomb-results {
+    float: left;
+    width: 50%;
+    outline: 1px blue solid;
+    padding: 18px;
+    text-align: left;
+}
+
+article.twitch-clip-results {
+    float: right;
+    width: 50%;
+    height: 340px;
+    outline: 1px red solid;
+    position: relative;
+    overflow: hidden;
+    padding: 18px;
+    /* padding-top: 56.25%; */
+}
+
+.clear {
+    clear: both;
 }
 
 header {
@@ -55,8 +79,19 @@ input.game-search, label.game-search {
     width: 100%;
 }
 
-/* @media (min-width: 480px) {
+@media (max-width: 768px) {
+    article.giantbomb-results, article.twitch-clip-results {
+        width: 100%;
+    }
+    
+    h1 {
+        color: red;
+    }
+}
+
+@media (min-width: 480px) {
     .game-search {
         width: 400px;
     }
-} */
+}
+

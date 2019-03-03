@@ -70,8 +70,8 @@ function displayTwitchClip(responseJson) {
     let results = `
     <iframe
     src="https://clips.twitch.tv/embed?clip=${clipId}&autoplay=false"
-    height="360"
-    width="640"
+    height="100%"
+    width="100%"
     frameborder="0"
     scrolling="no"
     allowfullscreen="true">
@@ -122,7 +122,7 @@ function renderGameInfo(response) {
         <img class="game-thumbnail" src="${response.results[0].image.thumb_url}" alt="${response.results[0].name} thumbnail">
         <h2 class="game-title">${response.results[0].name}</h2>
         <p><b>Platforms:</b> <span class="game-platforms"></span></p>
-        <p><b>Description:</b> ${response.results[0].deck} <a href="${response.results[0].site_detail_url} target="_blank">Read More...</a></p>`
+        <p><b>Description:</b> ${response.results[0].deck} <a href="${response.results[0].site_detail_url}" target="_blank">Read More...</a></p>`
     );
 }
 
@@ -131,15 +131,15 @@ function listGamePlatforms(response) {
     for (let i = 0; i < response.results[0].platforms.length; i++) {
         platforms.push(response.results[0].platforms[i].name);
     }
-    platforms.join(', ');
-    $('.game-platforms').text(platforms);
+    $('.game-platforms').text(platforms.join(', '));
 }
 
 function renderGameReviews(response) {
     $('.giantbomb-review').html(`
     <h3 class="game-reviews">Reviews</h3>
     <p><b>Score:</b> <span class="game-score">${response.results[0].score}</span>/5</p>
-    <p>${response.results[0].deck} <a href="${response.results[0].site_detail_url} target="_blank">Read More...</a></p>`);
+    <p>${response.results[0].deck} <a href="${response.results[0].site_detail_url}" target="_blank">Read More...</a></p>`);
+    console.log('giantbomb review running');
 }
 
 

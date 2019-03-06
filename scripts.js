@@ -2,60 +2,66 @@
 
 const apiGiantBomb = `fec6b7750ced7ec24e9ff54a9b2aeea2b573d5a8`;
 
+const twitchIdUrl = 'https://api.twitch.tv/helix/games?name=';
+
+const twitchClipUrl = 'https://api.twitch.tv/helix/clips?game_id=';
+
+const twitchStreamUrl = 'https://api.twitch.tv/helix/streams?game_id=';
+
+const options = {
+    headers: {
+        'Client-id': 'lzvscy091kgp5i7muvi8xhpd9uo5dc'
+    }
+};
+
 function submitButtonHandler() {
     $('.game-form').on('submit', function(event) {
         event.preventDefault();
         let userInput = $('input.game-search').val();
         $('.twitch-clip-results').empty();
-        generateTwitchRequest(userInput);
         handleGameSearch();
     });
 }
 
-function createTwitchIdUrl(userInput) {
-    let modifiedUserInput = encodeURIComponent(userInput);
-    let requestUrl = `https://api.twitch.tv/helix/games?name=${modifiedUserInput}`;
-    return requestUrl;
-}
-
-function createTwitchClipUrl(response) {
-    let modifiedResponse = encodeURIComponent(response);
-    let requestUrl = `https://api.twitch.tv/helix/clips?game_id=${modifiedResponse}`;
+function createTwitchUrl(input, selectedUrl) {
+    let modifiedInput = encodeURIComponent(input);
+    let requestUrl = selectedUrl + modifiedInput;
     return requestUrl;
 }
 
 function generateTwitchRequest(userInput) {
-    const options = {
-        headers: {
-            'Client-id': 'lzvscy091kgp5i7muvi8xhpd9uo5dc'
-        }
-    };
-
-    fetch(createTwitchIdUrl(userInput), options)
+    fetch(createTwitchUrl(userInput, twitchIdUrl), options)
     .then(response => {
         if (response.ok) {
             return response.json();
         }
-        throw new Error(response.statusTest);
+        throw new Error(response.statusText);
     })
     .then(responseJson => {
         if (responseJson.data.length > 0) {
             return responseJson.data[0].id;
-        }   
-        throw new Error("No results");
+        }
+        console.log('no results response', responseJson);
+        throw new Error("No results for the selected game available.");
     })
     // .then(twitchId => console.log('TwitchID', twitchId))
-    .then(twitchId => createTwitchClipUrl(twitchId))
-    .then(clipUrl => fetch(clipUrl, options))
+    .then(twitchId =>  {
+        let twitchUrls = {
+        clipUrl: createTwitchUrl(twitchId, twitchClipUrl),
+        streamUrl: createTwitchUrl(twitchId, twitchStreamUrl)
+        };
+        return twitchUrls;
+    })
+    .then(twitchUrls => fetch(twitchUrls.clipUrl, options))
     .then(response => {
         if (response.ok) {
             return response.json();
         }
-        throw new Error(response.statusTest);
+        throw new Error(response.statusText);
     })
     // .then(responseJson => console.log('Twitch clip', responseJson))
     .then(responseJson => displayTwitchClip(responseJson))
-    .catch(error => $('.twitch-clip-results').empty().append('Something went wrong: ' + error.message));
+    .catch(error => $('.twitch-clip-results').empty().append('<h2>Most Popular Twitch Clip:</h2> ' + error.message));
 }
 
 function displayTwitchClip(responseJson) {
@@ -93,6 +99,8 @@ function displayGameInfo(gameTitle) {
                 renderGameInfo(response);
                 listGamePlatforms(response);
                 displayGameReviews(response);
+                // We are calling generateTwitchRequest() here in order to feed the Twitch API with Giantbomb's somewhat smarter search results. The ternary operator is a hack to make Red Dead Redemption 2 pull from Twitch correctly.
+                generateTwitchRequest((response.results[0].name === "Red Dead Redemption II") ? "Red Dead Redemption 2" : response.results[0].name);
             } else {
                 displayErrorMessage();
                 $('.giantbomb-review').empty();

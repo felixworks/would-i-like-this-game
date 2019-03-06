@@ -24,7 +24,14 @@ article.giantbomb-results {
 }
 
 .giantbomb-info {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.bottom-border {
+    width: 50%;
+    margin: 0 auto;
+    margin: 30px 0px;
+    border-bottom: 1px solid #eee;
 }
 
 article.twitch-clip-results {
@@ -63,7 +70,7 @@ h3 {
     line-height: 2rem;
 }
 
-p { padding-bottom: 0.6rem; line-height: 1.6rem; }
+p { padding-bottom: 0.5rem; line-height: 1.5rem; }
 b { font-weight: bold; }
 i { font-style: italic; }
 u { text-decoration: underline; }
@@ -118,6 +125,12 @@ input.game-search {
 .game-form button:hover, .game-form button:focus {
     color: #000;
     background-color: #fff;
+}
+
+.game-thumbnail {
+    float: right;
+    padding-left: 10px;
+    padding-bottom: 10px;
 }
 
 footer {

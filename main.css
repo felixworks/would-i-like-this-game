@@ -41,6 +41,14 @@ article.twitch-clip-results {
     padding: 20px;
 }
 
+article.twitch-stream-results {
+    float: right;
+    width: 50%;
+    height: 340px;
+    padding: 20px;
+    
+}
+
 .clear {
     clear: both;
 }

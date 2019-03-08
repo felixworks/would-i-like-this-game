@@ -43,6 +43,7 @@ function generateTwitchStream(userInput) {
     })
     .then(responseJson => {
         if (responseJson.data.length > 0) {
+            console.log('returning responseJson from generateTwitchStream', responseJson);
             return responseJson.data[0].id;
         }
         console.log('no results response', responseJson);
@@ -63,7 +64,7 @@ function generateTwitchStream(userInput) {
         }
         throw new Error(response.statusText);
     })
-    // .then(responseJson => console.log('Twitch clip', responseJson))
+    // .then(responseJson => console.log('Twitch stream', responseJson))
     .then(responseJson => displayTwitchStream(responseJson))
     .catch(error => $('.twitch-stream-results').empty().append('<h2>Most Popular Twitch Streams</h2>' + error.message));
 }
@@ -104,8 +105,13 @@ function generateTwitchClip(userInput) {
 }
 
 function displayTwitchStream(responseJson) {
-    let userNames = [responseJson.data[0].user_name, responseJson.data[1].user_name, responseJson.data[2].user_name];
-    let results = [`<h2>Most Popular Twitch Streams</h2>`]
+    console.log('before userNames has been created', responseJson);
+    let userNames = [];
+    for (let i=0; i<responseJson.data.length; i++) {
+        userNames.push(responseJson.data[i].user_name);
+    }
+    let results = [`<h2>Most Popular Twitch Streams:</h2>`];
+    console.log('list of channel names', userNames)
     userNames.map(userName => {
         results.push(`
         <div class="iframe-container">

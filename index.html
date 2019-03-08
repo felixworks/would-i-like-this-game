@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Should I Buy This Game?</title>
+    <title>Would I Like This Game?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="img/favicon.png">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link href="https://fonts.googleapis.com/css?family=Frank+Ruhl+Libre|Open+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
@@ -13,22 +13,25 @@
 <body>
     <main>
         <header>
-            <h1>Should I Buy This Game?</h1>
+            <h1>Would I Like This Game?</h1>
         </header>
         <section class="page-blurb">
             <p>Unsure whether you'd enjoy a certain game? We'll help you decide!</p>
         </section>
-        <section class="search-container">
-            <form role="search" class="game-form">
-                <legend>Search for a game or keyword:</legend>
+        <section role="search" class="search-container">
+            <form class="game-form">
+                <legend>Search for a game title!</legend>
                 <label for="game-search" class="game-search"></label>
-                <input type="text" class="game-search" id="game-search" name="game-search" placeholder="Search for a game or keyword!" required>
+                <input type="text" class="game-search" id="game-search" name="game-search" placeholder="Search for a game title!" required>
                 <button type="submit" title="Submit search query">Comb through the ancient texts</button>
             </form>
         </section>
+        <section class="searched-for"></section>
         <article class="giantbomb-results">
             <section class="giantbomb-info"></section>
             <section class="giantbomb-review"></section>
+            <section class="user-reviews">
+            </section>
         </article>
         <article class ="twitch-stream-results">
         </article>

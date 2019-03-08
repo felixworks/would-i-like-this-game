@@ -18,7 +18,7 @@ function submitButtonHandler() {
     $('.game-form').on('submit', function(event) {
         event.preventDefault();
         let userInput = $('input.game-search').val();
-        $('.searched-for').html(`<p>Showing results for: <b>${userInput}</b></p>`);
+        $('.searched-for').html(`<p>Showing results for: <span class="search-term">${userInput}</span></p>`);
         $('.twitch-clip-results').empty();
         $('.twitch-stream-results').empty();
         handleGameSearch();
@@ -65,7 +65,7 @@ function generateTwitchStream(userInput) {
     })
     // .then(responseJson => console.log('Twitch clip', responseJson))
     .then(responseJson => displayTwitchStream(responseJson))
-    .catch(error => $('.twitch-stream-results').empty().append('<h2>Most Popular Twitch Streams:</h2> ' + error.message));
+    .catch(error => $('.twitch-stream-results').empty().append('<h2>Most Popular Twitch Streams</h2>' + error.message));
 }
 
 function generateTwitchClip(userInput) {
@@ -100,22 +100,20 @@ function generateTwitchClip(userInput) {
     })
     // .then(responseJson => console.log('Twitch clip', responseJson))
     .then(responseJson => displayTwitchClip(responseJson))
-    .catch(error => $('.twitch-clip-results').empty().append('<h2>Most Popular Twitch Clip:</h2> ' + error.message));
+    .catch(error => $('.twitch-clip-results').empty().append('<h2>Most Popular Twitch Clip</h2>' + error.message));
 }
 
 function displayTwitchStream(responseJson) {
     let userNames = [responseJson.data[0].user_name, responseJson.data[1].user_name, responseJson.data[2].user_name];
-    let results = [`<h2>Most Popular Twitch Streams:</h2>`]
+    let results = [`<h2>Most Popular Twitch Streams</h2>`]
     userNames.map(userName => {
         results.push(`
+        <div class="iframe-container">
         <iframe
         src="https://player.twitch.tv/?channel=${userName}&autoplay=false"
-        height="100%"
-        width="100%"
-        frameborder="0"
-        scrolling="no"
-        allowfullscreen="true">
-        </iframe>`)
+        allowfullscreen>
+        </iframe>
+        </div>`)
     })
     $('.twitch-stream-results').append(results);
 }
@@ -123,15 +121,13 @@ function displayTwitchStream(responseJson) {
 function displayTwitchClip(responseJson) {
     let clipId = responseJson.data[0].id;
     let results = `
-        <h2>Most Popular Twitch Clip:</h2>
+        <h2>Most Popular Twitch Clip</h2>
+        <div class="iframe-container">
         <iframe
         src="https://clips.twitch.tv/embed?clip=${clipId}&autoplay=false"
-        height="100%"
-        width="100%"
-        frameborder="0"
-        scrolling="no"
-        allowfullscreen="true">
-        </iframe>`;
+        allowfullscreen>
+        </iframe>
+        </div>`;
     // console.log(results);
     $('.twitch-clip-results').append(results);
 }
@@ -279,7 +275,7 @@ function listSimilarGames(response) {
 
 function renderGameReviews(response) {
     $('.giantbomb-review').html(`
-        <h3 class="game-reviews">Reviews</h3>
+        <h2 class="game-reviews">Reviews</h2>
         <p><b>Score:</b> <img src="img/game-stars-${response.results[0].score}.png" alt="${response.results[0].score} out of 5 stars"></p>
         <p>${response.results[0].deck} <a href="${response.results[0].site_detail_url}" target="_blank">Read More</a></p>
     `);
@@ -295,15 +291,15 @@ function renderUserReviews(response) {
 
 function displayErrorMessage() {
     $('.giantbomb-info').html(`
-        <p>Error: Game does not exist!</p>
+        <h2>Error: Game does not exist!</h2>
     `);
 }
 
 function displayNoReviews() {
     $('.giantbomb-review').html(`
-        <h3 class="game-reviews">Reviews</h3>
+        <h2 class="game-reviews">Reviews</h2>
     `);
 }
 
 
-$(submitButtonHandler);
+$(submitButtonHandler)

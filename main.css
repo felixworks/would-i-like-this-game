@@ -2,10 +2,17 @@
     box-sizing: border-box;
 }
 
+::selection {
+    color: #c5abf4;
+    background-color: #444;
+}
+
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto Slab', serif;
+    font-size: 0.9rem;
     line-height: 1.5rem;
-    background-color: #eee;
+    color: #fafafa;
+    background-color: #111;
 }
 
 main {
@@ -13,40 +20,36 @@ main {
     margin: 30px auto;
     text-align: center;
     padding: 20px;
-    background-color: #fff;
+    background-color: #222;
+    overflow: auto;
 }
 
-article.giantbomb-results {
-    float: left;
+.giantbomb-results {
     width: 50%;
     padding: 20px;
     text-align: left;
+    padding-right: 20px;
 }
 
 .giantbomb-info {
     margin-bottom: 1.5rem;
 }
 
-.bottom-border {
+.twitch-results {
     width: 50%;
-    margin: 0 auto;
-    margin: 30px 0px;
-    border-bottom: 1px solid #eee;
+    margin-top: 10px;
+    padding-left: 20px;
 }
 
-article.twitch-clip-results {
-    float: right;
-    width: 50%;
-    height: 340px;
-    padding: 20px;
+.twitch-stream-results {
+    margin-bottom: 40px;
 }
 
-article.twitch-stream-results {
-    float: right;
-    width: 50%;
-    height: 340px;
-    padding: 20px;
-    
+.display-info {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
 }
 
 .clear {
@@ -58,38 +61,55 @@ header {
 }
 
 h1 {
-    font-family: 'Frank Ruhl Libre', serif;
+    font-family: 'Bungee', serif;
     font-size: 4rem;
-    font-weight: bold;
     line-height: 5rem;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px #c5abf4;
 }
 
 h2 {
-    font-family: 'Frank Ruhl Libre', serif;
-    font-size: 2rem;
-    font-weight: bold;
+    font-family: 'Bungee', serif;
+    font-size: 1.6rem;
     line-height: 3rem;
-}
-
-h3 {
-    font-family: 'Frank Ruhl Libre', serif;
-    font-size: 1.5rem;
-    font-weight: bold;
-    line-height: 2rem;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
 }
 
 p { padding-bottom: 0.5rem; line-height: 1.5rem; }
-b { font-weight: bold; }
+
+b {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold; 
+    background-color: #6441a4;
+    padding: 1px 3px;
+    margin-right: 5px;
+}
+
 i { font-style: italic; }
+
 u { text-decoration: underline; }
 
+.search-term {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold; 
+    color: #bbffaf;
+    /* background-color: #6441a4; */
+    padding: 1px 5px;
+}
+
 a:link, a:visited {
-    color: #000;
-    font-weight: bold;
+    color: #c5abf4;
+    text-decoration: none;
+    transition: all 0.3s;
 }
 
 a:hover, a:focus {
-    text-decoration: none;
+    color: #bbffaf;
 }
 
 .page-blurb p {
@@ -113,30 +133,55 @@ legend {
 input.game-search {
     width: 100%;
     padding: 20px;
+    margin-bottom: 10px;
+    font-family: 'Roboto Slab', sans-serif;
     font-size: 1.3rem;
+    border: 1px solid #333;
+    color: #fafafa;
+    background-color: #333;
+    box-shadow: 2px 2px #444;
+    transition: all 0.3s;
+}
+
+input.game-search:hover {
+    background-color: #444;
+    border: 1px solid #333;
+    box-shadow: 2px 2px #333;
 }
 
 .game-form button {
-    font-size: 1rem;
-    letter-spacing: 1px;
+    font-family: 'Roboto Slab', serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
     font-weight: bold;
     margin: 10px 0px;
-    background-color: #000;
-    color: #fff;
+    background-color: #111;
+    color: #fafafa;
     text-transform: uppercase;
-    border: 1px solid black;
+    border: 1px solid #111;
     padding: 20px;
     width: 100%;
+    box-shadow: 2px 2px #444;
     cursor: pointer;
+    transition: all 0.3s;
 }
 
 .game-form button:hover, .game-form button:focus {
-    color: #000;
-    background-color: #fff;
+    color: #fafafa;
+    background-color: #6441a4;
+    border: 1px solid #6441a4;
+    box-shadow: 1px solid #000;
+}
+
+.searched-for {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin: 40px 0px;
 }
 
 .game-thumbnail {
     float: right;
+    padding-top: 10px;
     padding-left: 10px;
     padding-bottom: 10px;
 }
@@ -145,16 +190,37 @@ footer {
     max-width: 1200px;
     width: 100%;
     margin: 0px auto;
+    margin-bottom: 30px;
     margin-top: 100px;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     text-align: center;
+}
+
+.iframe-container {
+    overflow: hidden;
+    position: relative;
+    padding-top: 56.25%;
+    margin-bottom: 30px;
+}
+
+.iframe-container iframe {
+    position: absolute;
+    border: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 
 /* MEDIA QUERIES */
 
 @media (max-width: 768px) {
-    article.giantbomb-results, article.twitch-clip-results {
+    .display-info {
+        flex-direction: column;
+    }
+
+    article.giantbomb-results, article.twitch-results {
         width: 100%;
     }
 }

@@ -132,23 +132,26 @@ function fetchGameReviews(response) {
         jsonp: 'json_callback',
         url: `https://www.giantbomb.com/api/reviews/?format=jsonp&api_key=${apiGiantBomb}&filter=game:${gameId}`,
         success: function(response) {
-            renderGameReviews(response);
+            if (response.results.length > 0){
+                renderGameReviews(response);
+            } else {
+                displayNoReviews();
+            }
         }
     });
 }
 
 function fetchUserReviews(response) {
     let gameId = response.results[0].id.toString();
-    console.log('/user_reviews ', gameId);
 
     $.ajax ({
         type: 'GET',
         dataType: 'jsonp',
         crossDomain: true,
         jsonp: 'json_callback',
-        url: `https://www.giantbomb.com/api/user_reviews/?format=jsonp&api_key=${apiGiantBomb}&filter=game:3030-68771&limit=5`,
+        url: `https://www.giantbomb.com/api/user_reviews/?format=jsonp&api_key=${apiGiantBomb}&filter=game:3030-${gameId}&limit=5`,
         success: function(response) {
-            console.log(response);
+            // console.log(response);
             renderUserReviews(response);
         }
     });
@@ -221,9 +224,11 @@ function renderGameReviews(response) {
 }
 
 function renderUserReviews(response) {
-    $('.user-reviews').html(`
-        <p><img src="img/game-stars-${response.results.score}.png" alt="${response.results.score} out of 5 stars"> <b>${response.results.deck}</b> <a href="${response.results.site_detail_url}" target="_blank">Read More</a></p>
-    `);
+    let userRevs = [];
+    for (let i = 0; i < 5; i++) {
+        userRevs.push(`<p><img src="img/game-stars-${response.results[i].score}.png" alt="${response.results[i].score} out of 5 stars"> <b>${response.results[i].deck}</b> <a href="${response.results[i].site_detail_url}" target="_blank">Read More</a></p>`);
+    }
+    $('.user-reviews').html(userRevs.join(''));
 }
 
 function displayErrorMessage() {
@@ -234,7 +239,7 @@ function displayErrorMessage() {
 
 function displayNoReviews() {
     $('.giantbomb-review').html(`
-        <p>No reviews for this game exist.</p>
+        <h3 class="game-reviews">Reviews</h3>
     `);
 }
 

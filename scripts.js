@@ -17,8 +17,8 @@ const options = {
 function submitButtonHandler() {
     $('.game-form').on('submit', function(event) {
         event.preventDefault();
-        let userInput = $('input.game-search').val();
         $('.twitch-clip-results').empty();
+        $('.twitch-stream-results').empty();
         handleGameSearch();
     });
 }
@@ -26,10 +26,47 @@ function submitButtonHandler() {
 function createTwitchUrl(input, selectedUrl) {
     let modifiedInput = encodeURIComponent(input);
     let requestUrl = selectedUrl + modifiedInput;
+    console.log('requestUrl', requestUrl);
     return requestUrl;
 }
 
-function generateTwitchRequest(userInput) {
+function generateTwitchStream(userInput) {
+    fetch(createTwitchUrl(userInput, twitchIdUrl), options)
+    .then(response => {
+        if (response.ok) {
+            console.log(response);
+            return response.json();
+        }
+        throw new Error(response.statusText);
+    })
+    .then(responseJson => {
+        if (responseJson.data.length > 0) {
+            return responseJson.data[0].id;
+        }
+        console.log('no results response', responseJson);
+        throw new Error("No results for the selected game available.");
+    })
+    // .then(twitchId => console.log('TwitchID', twitchId))
+    .then(twitchId =>  {
+        let twitchUrls = {
+        clipUrl: createTwitchUrl(twitchId, twitchClipUrl),
+        streamUrl: createTwitchUrl(twitchId, twitchStreamUrl)
+        };
+        return twitchUrls;
+    })
+    .then(twitchUrls => fetch(twitchUrls.streamUrl, options))
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error(response.statusText);
+    })
+    // .then(responseJson => console.log('Twitch clip', responseJson))
+    .then(responseJson => displayTwitchStream(responseJson))
+    .catch(error => $('.twitch-stream-results').empty().append('<h2>Most Popular Twitch Streams:</h2> ' + error.message));
+}
+
+function generateTwitchClip(userInput) {
     fetch(createTwitchUrl(userInput, twitchIdUrl), options)
     .then(response => {
         if (response.ok) {
@@ -64,19 +101,35 @@ function generateTwitchRequest(userInput) {
     .catch(error => $('.twitch-clip-results').empty().append('<h2>Most Popular Twitch Clip:</h2> ' + error.message));
 }
 
+function displayTwitchStream(responseJson) {
+    let userNames = [responseJson.data[0].user_name, responseJson.data[1].user_name, responseJson.data[2].user_name];
+    let results = [`<h2>Most Popular Twitch Streams:</h2>`]
+    userNames.map(userName => {
+        results.push(`
+        <iframe
+        src="https://player.twitch.tv/?channel=${userName}&autoplay=false"
+        height="100%"
+        width="100%"
+        frameborder="0"
+        scrolling="no"
+        allowfullscreen="true">
+        </iframe>`)
+    })
+    $('.twitch-stream-results').append(results);
+}
+
 function displayTwitchClip(responseJson) {
-    // console.log('from displayTwitchClip', responseJson.data[0].id)
     let clipId = responseJson.data[0].id;
     let results = `
-    <h2>Most Popular Twitch Clip:</h2>
-    <iframe
-    src="https://clips.twitch.tv/embed?clip=${clipId}&autoplay=false"
-    height="100%"
-    width="100%"
-    frameborder="0"
-    scrolling="no"
-    allowfullscreen="true">
-    </iframe>`;
+        <h2>Most Popular Twitch Clip:</h2>
+        <iframe
+        src="https://clips.twitch.tv/embed?clip=${clipId}&autoplay=false"
+        height="100%"
+        width="100%"
+        frameborder="0"
+        scrolling="no"
+        allowfullscreen="true">
+        </iframe>`;
     // console.log(results);
     $('.twitch-clip-results').append(results);
 }
@@ -99,8 +152,9 @@ function displayGameInfo(gameTitle) {
                 renderGameInfo(response);
                 listGamePlatforms(response);
                 displayGameReviews(response);
-                // We are calling generateTwitchRequest() here in order to feed the Twitch API with Giantbomb's somewhat smarter search results. The ternary operator is a hack to make Red Dead Redemption 2 pull from Twitch correctly.
-                generateTwitchRequest((response.results[0].name === "Red Dead Redemption II") ? "Red Dead Redemption 2" : response.results[0].name);
+                // We are calling generateTwitchClip() here in order to feed the Twitch API with Giantbomb's somewhat smarter search results. The ternary operator is a hack to make Red Dead Redemption 2 pull from Twitch correctly.
+                generateTwitchStream(response.results[0].name);
+                generateTwitchClip((response.results[0].name === "Red Dead Redemption II") ? "Red Dead Redemption 2" : response.results[0].name);
             } else {
                 displayErrorMessage();
                 $('.giantbomb-review').empty();

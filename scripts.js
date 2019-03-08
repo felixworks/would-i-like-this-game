@@ -151,8 +151,7 @@ function fetchUserReviews(response) {
         jsonp: 'json_callback',
         url: `https://www.giantbomb.com/api/user_reviews/?format=jsonp&api_key=${apiGiantBomb}&filter=game:3030-${gameId}&limit=5`,
         success: function(response) {
-            // console.log(response);
-            renderUserReviews(response);
+            // renderUserReviews(response);
         }
     });
 }

@@ -154,11 +154,7 @@ function displayGameInfo(gameTitle) {
                 fetchGameInfo(response);
                 fetchGameReviews(response);
                 fetchUserReviews(response);
-                renderGameInfo(response);
-                listGamePlatforms(response);
-                displayGameReviews(response);
-                // We are calling generateTwitchClip() here in order to feed the Twitch API with Giantbomb's somewhat smarter search results.
-                // The ternary operator is a hack to make Red Dead Redemption 2 pull from Twitch correctly.
+                // We are calling generateTwitchClip() here in order to feed the Twitch API with Giantbomb's somewhat smarter search results. The ternary operator is a hack to make Red Dead Redemption 2 pull from Twitch correctly.
                 generateTwitchStream(response.results[0].name);
                 generateTwitchClip((response.results[0].name === "Red Dead Redemption II") ? "Red Dead Redemption 2" : response.results[0].name);
             } else {
@@ -225,7 +221,7 @@ function fetchUserReviews(response) {
 
 function renderGameInfo(response) {
     $('.giantbomb-info').html(`
-        <img class="game-thumbnail" src="${response.results.image.thumb_url}" alt="${response.results.name} thumbnail">
+    <img class="game-thumbnail" src="${response.results.image.thumb_url}" alt="${response.results.name} thumbnail"> 
         <h2 class="game-title">${response.results.name}</h2>
         <p><b>Rating:</b> <span class="game-ratings"></span></p>
         <p><b>Developers:</b> <span class="game-devs"></span></p>

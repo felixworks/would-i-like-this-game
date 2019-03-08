@@ -107,7 +107,7 @@ function generateTwitchClip(userInput) {
 function displayTwitchStream(responseJson) {
     console.log('before userNames has been created', responseJson);
     let userNames = [];
-    for (let i=0; i<responseJson.data.length; i++) {
+    for (let i=0; i<responseJson.data.length && i<3; i++) {
         userNames.push(responseJson.data[i].user_name);
     }
     let results = [`<h2>Most Popular Twitch Streams:</h2>`];

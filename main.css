@@ -38,6 +38,7 @@ main {
 .twitch-results {
     width: 50%;
     margin-top: 10px;
+    text-align: left;
     padding-left: 20px;
 }
 
@@ -98,7 +99,6 @@ u { text-decoration: underline; }
     letter-spacing: 2px;
     font-weight: bold; 
     color: #bbffaf;
-    /* background-color: #6441a4; */
     padding: 1px 5px;
 }
 
@@ -110,6 +110,22 @@ a:link, a:visited {
 
 a:hover, a:focus {
     color: #bbffaf;
+}
+
+.external-links {
+    margin-top: 30px;
+}
+
+a.external {
+    border: 1px solid #c5abf4;
+    padding: 5px 15px;
+    margin-right: 10px;
+    transition: all 0.3s;
+}
+
+a.external:hover, a.external:focus {
+    color: #333;
+    background-color: #c5abf4;
 }
 
 .page-blurb p {
@@ -170,7 +186,7 @@ input.game-search:hover {
     color: #fafafa;
     background-color: #6441a4;
     border: 1px solid #6441a4;
-    box-shadow: 1px solid #000;
+    box-shadow: 2px 2px #222;
 }
 
 .searched-for {
@@ -189,6 +205,7 @@ input.game-search:hover {
 footer {
     max-width: 1200px;
     width: 100%;
+    padding: 20px;
     margin: 0px auto;
     margin-bottom: 30px;
     margin-top: 100px;
@@ -214,7 +231,6 @@ footer {
 
 
 /* MEDIA QUERIES */
-
 @media (max-width: 768px) {
     .display-info {
         flex-direction: column;
@@ -223,11 +239,37 @@ footer {
     article.giantbomb-results, article.twitch-results {
         width: 100%;
     }
-}
 
-@media (min-width: 480px) {
-    .game-search {
-        width: 400px;
+    h1 {
+        font-size: 3rem;
+        line-height: 3.4rem;
+        margin-bottom: 10px;
+    }
+
+    .page-blurb p {
+        font-size: 1rem;
+        line-height: 1.4rem;
     }
 }
 
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+        line-height: 2.4rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+        line-height: 1.6rem;
+    }
+
+    input.game-search {
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    .game-form button {
+        padding: 15px;
+        font-size: 0.7rem;
+    }
+}

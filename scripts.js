@@ -28,7 +28,7 @@ function submitButtonHandler() {
 function createTwitchUrl(input, selectedUrl) {
     let modifiedInput = encodeURIComponent(input);
     let requestUrl = selectedUrl + modifiedInput;
-    console.log('requestUrl', requestUrl);
+    // console.log('requestUrl', requestUrl);
     return requestUrl;
 }
 
@@ -36,7 +36,7 @@ function generateTwitchStream(userInput) {
     fetch(createTwitchUrl(userInput, twitchIdUrl), options)
     .then(response => {
         if (response.ok) {
-            console.log(response);
+            // console.log(response);
             return response.json();
         }
         throw new Error(response.statusText);
@@ -46,7 +46,7 @@ function generateTwitchStream(userInput) {
             console.log('returning responseJson from generateTwitchStream', responseJson);
             return responseJson.data[0].id;
         }
-        console.log('no results response', responseJson);
+        // console.log('no results response', responseJson);
         throw new Error("No results for the selected game available.");
     })
     // .then(twitchId => console.log('TwitchID', twitchId))
@@ -81,7 +81,7 @@ function generateTwitchClip(userInput) {
         if (responseJson.data.length > 0) {
             return responseJson.data[0].id;
         }
-        console.log('no results response', responseJson);
+        // console.log('no results response', responseJson);
         throw new Error("No results for the selected game available.");
     })
     // .then(twitchId => console.log('TwitchID', twitchId))
@@ -155,7 +155,8 @@ function displayGameInfo(gameTitle) {
             if (response.results.length > 0) {
                 fetchGameInfo(response);
                 fetchGameReviews(response);
-                fetchUserReviews(response);
+                renderMoreInfo(response);
+
                 // We are calling generateTwitchClip() here in order to feed the Twitch API with Giantbomb's somewhat smarter search results. The ternary operator is a hack to make Red Dead Redemption 2 pull from Twitch correctly.
                 generateTwitchStream(response.results[0].name);
                 generateTwitchClip((response.results[0].name === "Red Dead Redemption II") ? "Red Dead Redemption 2" : response.results[0].name);
@@ -202,21 +203,6 @@ function fetchGameReviews(response) {
             } else {
                 displayNoReviews();
             }
-        }
-    });
-}
-
-function fetchUserReviews(response) {
-    let gameId = response.results[0].id.toString();
-
-    $.ajax ({
-        type: 'GET',
-        dataType: 'jsonp',
-        crossDomain: true,
-        jsonp: 'json_callback',
-        url: `https://www.giantbomb.com/api/user_reviews/?format=jsonp&api_key=${apiGiantBomb}&filter=game:3030-${gameId}&limit=5`,
-        success: function(response) {
-            // renderUserReviews(response);
         }
     });
 }
@@ -287,12 +273,21 @@ function renderGameReviews(response) {
     `);
 }
 
-function renderUserReviews(response) {
-    let userRevs = [];
-    for (let i = 0; i < 5; i++) {
-        userRevs.push(`<p><img src="img/game-stars-${response.results[i].score}.png" alt="${response.results[i].score} out of 5 stars"> <b>${response.results[i].deck}</b> <a href="${response.results[i].site_detail_url}" target="_blank">Read More</a></p>`);
-    }
-    $('.user-reviews').html(userRevs.join(''));
+function renderMoreInfo(response) {
+    let gameGuid = response.results[0].guid;
+    let gameTitle = (response.results[0].name === "Red Dead Redemption II") ? "Red Dead Redemption 2" : response.results[0].name;
+    let gameTitle2 = gameTitle.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
+    let gameTitleUrl = gameTitle2.replace(/\s+/g, '-').toLowerCase();
+    console.log('gameTitle', gameTitle);
+    console.log('gameTitle2', gameTitle2);
+    console.log('gameTitleUrl', gameTitleUrl);
+
+    $('.more-info').html(`
+    <p><a class="gb-reviews" href="https://www.giantbomb.com/${gameTitleUrl}/${gameGuid}/user-reviews/" target="_blank">See more user reviews for ${gameTitle} on GiantBomb.com</a></p>
+
+    <h2 class="external-links">More Info</h2>
+    <p><a class="external" href="https://www.gamespot.com/${gameTitleUrl}/reviews" target="_blank">GameSpot</a><a class="external" href="https://www.ign.com/games/${gameTitleUrl}" target="_blank">IGN</a></p>
+    `);
 }
 
 function displayErrorMessage() {
@@ -306,6 +301,5 @@ function displayNoReviews() {
         <h2 class="game-reviews">Reviews</h2>
     `);
 }
-
 
 $(submitButtonHandler)

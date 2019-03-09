@@ -14,3 +14,8 @@
 * JavaScript
 * GiantBomb API
 * Twitch API
+
+
+## Authors
+* Charlotte Shih - [Portfolio:](https://charlotteshih.github.io/portfolio/)
+* Felix Meyer - Portfolio: 

@@ -28,7 +28,6 @@ function submitButtonHandler() {
 function createTwitchUrl(input, selectedUrl) {
     let modifiedInput = encodeURIComponent(input);
     let requestUrl = selectedUrl + modifiedInput;
-    // console.log('requestUrl', requestUrl);
     return requestUrl;
 }
 
@@ -36,7 +35,6 @@ function generateTwitchStream(userInput) {
     fetch(createTwitchUrl(userInput, twitchIdUrl), options)
     .then(response => {
         if (response.ok) {
-            // console.log(response);
             return response.json();
         }
         throw new Error(response.statusText);
@@ -46,10 +44,8 @@ function generateTwitchStream(userInput) {
             console.log('returning responseJson from generateTwitchStream', responseJson);
             return responseJson.data[0].id;
         }
-        // console.log('no results response', responseJson);
         throw new Error("No results for the selected game available.");
     })
-    // .then(twitchId => console.log('TwitchID', twitchId))
     .then(twitchId =>  {
         let twitchUrls = {
         clipUrl: createTwitchUrl(twitchId, twitchClipUrl),
@@ -64,7 +60,6 @@ function generateTwitchStream(userInput) {
         }
         throw new Error(response.statusText);
     })
-    // .then(responseJson => console.log('Twitch stream', responseJson))
     .then(responseJson => displayTwitchStream(responseJson))
     .catch(error => $('.twitch-stream-results').empty().append('<h2>Most Popular Twitch Streams</h2>' + error.message));
 }
@@ -81,10 +76,8 @@ function generateTwitchClip(userInput) {
         if (responseJson.data.length > 0) {
             return responseJson.data[0].id;
         }
-        // console.log('no results response', responseJson);
         throw new Error("No results for the selected game available.");
     })
-    // .then(twitchId => console.log('TwitchID', twitchId))
     .then(twitchId =>  {
         let twitchUrls = {
         clipUrl: createTwitchUrl(twitchId, twitchClipUrl),
@@ -99,19 +92,16 @@ function generateTwitchClip(userInput) {
         }
         throw new Error(response.statusText);
     })
-    // .then(responseJson => console.log('Twitch clip', responseJson))
     .then(responseJson => displayTwitchClip(responseJson))
     .catch(error => $('.twitch-clip-results').empty().append('<h2>Most Popular Twitch Clip</h2>' + error.message));
 }
 
 function displayTwitchStream(responseJson) {
-    console.log('before userNames has been created', responseJson);
     let userNames = [];
     for (let i=0; i<responseJson.data.length && i<3; i++) {
         userNames.push(responseJson.data[i].user_name);
     }
-    let results = [`<h2>Most Popular Twitch Streams:</h2>`];
-    console.log('list of channel names', userNames)
+    let results = [`<h2>Most Popular Twitch Streams</h2>`];
     userNames.map(userName => {
         results.push(`
         <div class="iframe-container">
@@ -134,7 +124,6 @@ function displayTwitchClip(responseJson) {
         allowfullscreen>
         </iframe>
         </div>`;
-    // console.log(results);
     $('.twitch-clip-results').append(results);
 }
 
@@ -156,7 +145,6 @@ function displayGameInfo(gameTitle) {
                 fetchGameInfo(response);
                 fetchGameReviews(response);
                 renderMoreInfo(response);
-
                 // We are calling generateTwitchClip() here in order to feed the Twitch API with Giantbomb's somewhat smarter search results. The ternary operator is a hack to make Red Dead Redemption 2 pull from Twitch correctly.
                 generateTwitchStream((response.results[0].name === "Red Dead Redemption II") ? "Red Dead Redemption 2" : response.results[0].name);
                 generateTwitchClip((response.results[0].name === "Red Dead Redemption II") ? "Red Dead Redemption 2" : response.results[0].name);
@@ -278,10 +266,6 @@ function renderMoreInfo(response) {
     let gameTitle = (response.results[0].name === "Red Dead Redemption II") ? "Red Dead Redemption 2" : response.results[0].name;
     let gameTitle2 = gameTitle.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
     let gameTitleUrl = gameTitle2.replace(/\s+/g, '-').toLowerCase();
-    console.log('gameTitle', gameTitle);
-    console.log('gameTitle2', gameTitle2);
-    console.log('gameTitleUrl', gameTitleUrl);
-
     $('.more-info').html(`
     <p><a class="gb-reviews" href="https://www.giantbomb.com/${gameTitleUrl}/${gameGuid}/user-reviews/" target="_blank">See more user reviews for ${gameTitle} on GiantBomb.com</a></p>
 

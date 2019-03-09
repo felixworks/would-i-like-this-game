@@ -12,8 +12,8 @@
 * HTML
 * CSS
 * JavaScript
-* GiantBomb API
-* Twitch API
+* [GiantBomb API](https://www.giantbomb.com/api/)
+* [Twitch API](https://dev.twitch.tv/)
 
 
 ## Authors

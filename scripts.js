@@ -158,7 +158,7 @@ function displayGameInfo(gameTitle) {
                 renderMoreInfo(response);
 
                 // We are calling generateTwitchClip() here in order to feed the Twitch API with Giantbomb's somewhat smarter search results. The ternary operator is a hack to make Red Dead Redemption 2 pull from Twitch correctly.
-                generateTwitchStream(response.results[0].name);
+                generateTwitchStream((response.results[0].name === "Red Dead Redemption II") ? "Red Dead Redemption 2" : response.results[0].name);
                 generateTwitchClip((response.results[0].name === "Red Dead Redemption II") ? "Red Dead Redemption 2" : response.results[0].name);
             } else {
                 displayErrorMessage();

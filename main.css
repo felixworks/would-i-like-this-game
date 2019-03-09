@@ -185,7 +185,7 @@ input.game-search:hover {
     color: #fafafa;
     background-color: #6441a4;
     border: 1px solid #6441a4;
-    box-shadow: 1px solid #000;
+    box-shadow: 2px 2px #222;
 }
 
 .searched-for {

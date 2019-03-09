@@ -12,6 +12,7 @@
 * HTML
 * CSS
 * JavaScript
+* jQuery
 * [GiantBomb API](https://www.giantbomb.com/api/)
 * [Twitch API](https://dev.twitch.tv/)
 

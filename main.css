@@ -128,13 +128,9 @@ a.external:hover, a.external:focus {
     background-color: #c5abf4;
 }
 
-.page-blurb p {
+header p {
     font-size: 1.4rem;
     line-height: 2rem;
-}
-
-legend {
-    visibility: hidden;
 }
 
 .game-form {
@@ -246,7 +242,7 @@ footer {
         margin-bottom: 10px;
     }
 
-    .page-blurb p {
+    header p {
         font-size: 1rem;
         line-height: 1.4rem;
     }

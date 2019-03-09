@@ -17,5 +17,5 @@
 
 
 ## Authors
-* Charlotte Shih - [Portfolio:](https://charlotteshih.github.io/portfolio/)
-* Felix Meyer - Portfolio: 
+* Charlotte Shih - [Portfolio](https://charlotteshih.github.io/portfolio/)
+* Felix Meyer - [Portfolio](https://felixworks.github.io/portfolio/)

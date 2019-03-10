@@ -1,13 +1,9 @@
 'use strict';
 
 const apiGiantBomb = `fec6b7750ced7ec24e9ff54a9b2aeea2b573d5a8`;
-
 const twitchIdUrl = 'https://api.twitch.tv/helix/games?name=';
-
 const twitchClipUrl = 'https://api.twitch.tv/helix/clips?game_id=';
-
 const twitchStreamUrl = 'https://api.twitch.tv/helix/streams?game_id=';
-
 const options = {
     headers: {
         'Client-id': 'lzvscy091kgp5i7muvi8xhpd9uo5dc'
@@ -103,11 +99,8 @@ function displayTwitchStream(responseJson) {
     let results = [`<h2>Most Popular Twitch Streams</h2>`];
     userNames.map(userName => {
         results.push(`
-        <div class="iframe-container">
-        <iframe
-        src="https://player.twitch.tv/?channel=${userName}&autoplay=false"
-        allowfullscreen>
-        </iframe>
+        <div class="iframe-container" data-embed="${userName}">
+            <div class="play-button"></div>
         </div>`)
     })
     $('.twitch-stream-results').append(results);
@@ -117,11 +110,8 @@ function displayTwitchClip(responseJson) {
     let clipId = responseJson.data[0].id;
     let results = `
         <h2>Most Popular Twitch Clip</h2>
-        <div class="iframe-container">
-        <iframe
-        src="https://clips.twitch.tv/embed?clip=${clipId}&autoplay=false"
-        allowfullscreen>
-        </iframe>
+        <div class="iframe-container" data-embed="${clipId}">
+            <div class="play-button"></div>
         </div>`;
     $('.twitch-clip-results').append(results);
 }

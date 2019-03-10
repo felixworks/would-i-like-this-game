@@ -41,7 +41,6 @@ function generateTwitchStream(userInput) {
     })
     .then(responseJson => {
         if (responseJson.data.length > 0) {
-            console.log('returning responseJson from generateTwitchStream', responseJson);
             return responseJson.data[0].id;
         }
         throw new Error("No results for the selected game available.");
@@ -166,7 +165,6 @@ function fetchGameInfo(response) {
         jsonp: 'json_callback',
         url: `https://www.giantbomb.com/api/game/${gameGuid}/?format=jsonp&api_key=${apiGiantBomb}`,
         success: function(response) {
-            console.log(response);
             renderGameInfo(response);
             listGameData(response);
             listSimilarGames(response);

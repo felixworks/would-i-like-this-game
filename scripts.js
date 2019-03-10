@@ -99,8 +99,11 @@ function displayTwitchStream(responseJson) {
     let results = [`<h2>Most Popular Twitch Streams</h2>`];
     userNames.map(userName => {
         results.push(`
-        <div class="iframe-container" data-embed="${userName}">
-            <div class="play-button"></div>
+        <div class="iframe-container">
+        <iframe
+        src="https://player.twitch.tv/?channel=${userName}&autoplay=false"
+        allowfullscreen>
+        </iframe>
         </div>`)
     })
     $('.twitch-stream-results').append(results);
@@ -110,8 +113,11 @@ function displayTwitchClip(responseJson) {
     let clipId = responseJson.data[0].id;
     let results = `
         <h2>Most Popular Twitch Clip</h2>
-        <div class="iframe-container" data-embed="${clipId}">
-            <div class="play-button"></div>
+        <div class="iframe-container">
+        <iframe
+        src="https://clips.twitch.tv/embed?clip=${clipId}&autoplay=false"
+        allowfullscreen>
+        </iframe>
         </div>`;
     $('.twitch-clip-results').append(results);
 }
@@ -182,33 +188,36 @@ function fetchGameReviews(response) {
 }
 
 function renderGameInfo(response) {
-    $('.giantbomb-info').html(`
-    <img class="game-thumbnail" src="${response.results.image.thumb_url}" alt="${response.results.name} thumbnail"> 
-        <h2 class="game-title">${response.results.name}</h2>
-        <p><b>Rating:</b> <span class="game-ratings"></span></p>
-        <p><b>Developers:</b> <span class="game-devs"></span></p>
-        <p><b>Platforms:</b> <span class="game-platforms"></span></p>
-        <p><b>Genres:</b> <span class="game-genres"></span></p>
-        <p><b>Description:</b> ${response.results.deck} <a href="${response.results.site_detail_url}" target="_blank">Read More</a></p>
-        <p><b>Similar Games:</b> <span class="similar-games"></span></p>
-    `);
+    $('.game-thumbnail').attr('src', response.results.image.thumb_url).attr('alt', response.results.name + ' thumbnail');
+    $('.game-title').text(response.results.name);
+    $('.game-desc').empty().append(`<b>Description:</b> ${response.results.deck} <a href="${response.results.site_detail_url}" target="_blank">Read More</a>`);
+    // $('.giantbomb-info').html(`
+    // <img class="game-thumbnail" src="${response.results.image.thumb_url}" alt="${response.results.name} thumbnail"> 
+    // <h2 class="game-title">${response.results.name}</h2>
+    // <p><b>Rating:</b> <span class="game-ratings"></span></p>
+    // <p><b>Developers:</b> <span class="game-devs"></span></p>
+    // <p><b>Platforms:</b> <span class="game-platforms"></span></p>
+    // <p><b>Genres:</b> <span class="game-genres"></span></p>
+    // <p><b>Description:</b> ${response.results.deck} <a href="${response.results.site_detail_url}" target="_blank">Read More</a></p>
+    // <p><b>Similar Games:</b> <span class="similar-games"></span></p>
+    // `);
 }
 
 function listGameData(response) {
-    let largestArray = Math.max(response.results.developers.length, response.results.original_game_rating.length, response.results.genres.length);
+    let longestArray = Math.max(response.results.developers.length, response.results.original_game_rating.length, response.results.genres.length);
 
-    let gameDevs = [];
     let ratings = [];
+    let gameDevs = [];
     let platforms = [];
     let genres = [];
 
-    for (let i = 0; i < largestArray; i++) {       
-        if (response.results.developers[i]) {
-            gameDevs.push(response.results.developers[i].name);
-        }
-
+    for (let i = 0; i < longestArray; i++) {
         if (response.results.original_game_rating[i]) {
             ratings.push(response.results.original_game_rating[i].name);
+        }
+
+        if (response.results.developers[i]) {
+            gameDevs.push(response.results.developers[i].name);
         }
 
         if (response.results.platforms[i]) {
@@ -220,22 +229,22 @@ function listGameData(response) {
         }
     }
 
-    $('.game-devs').text(gameDevs.join(', '));
-    $('.game-ratings').text(ratings.join(', '));
-    $('.game-platforms').text(platforms.join(', '));
-    $('.game-genres').text(genres.join(', '));
+    $('.game-ratings').empty().append(`<b>Ratings:</b> ${ratings.join(', ')}`);
+    $('.game-devs').empty().append(`<b>Developers:</b> ${gameDevs.join(', ')}`);
+    $('.game-platforms').empty().append(`<b>Platforms:</b> ${platforms.join(', ')}`);
+    $('.game-genres').empty().append(`<b>Genres:</b> ${genres.join(', ')}`);
 }
 
 function listSimilarGames(response) {
     if (response.results.similar_games == null) {
-        $('.similar-games').html(`N/A`);
+        $('.similar-games').empty().append(`<b>Similar Games:</b> N/A`);
     } else {
         let simGames = [];
         for (let i = 0; i < response.results.similar_games.length; i++) {
             simGames.push(`<a href="${response.results.similar_games[i].site_detail_url}" target="_blank">${response.results.similar_games[i].name}</a>`);
         }
         let simGamesList = simGames.join(', ');
-        $('.similar-games').html(simGamesList);
+        $('.similar-games').empty().append(`<b>Similar Games:</b> ${simGamesList}`);
     }
 }
 

@@ -166,11 +166,9 @@ function fetchGameInfo(response) {
         jsonp: 'json_callback',
         url: `https://www.giantbomb.com/api/game/${gameGuid}/?format=jsonp&api_key=${apiGiantBomb}`,
         success: function(response) {
+            console.log(response);
             renderGameInfo(response);
-            listGameDevs(response);
-            listGameRatings(response);
-            listGamePlatforms(response);
-            listGameGenres(response);
+            listGameData(response);
             listSimilarGames(response);
         }
     });
@@ -208,35 +206,35 @@ function renderGameInfo(response) {
     `);
 }
 
-function listGameDevs(response) {
+function listGameData(response) {
+    let largestArray = Math.max(response.results.developers.length, response.results.original_game_rating.length, response.results.genres.length);
+
     let gameDevs = [];
-    for (let i = 0; i < response.results.developers.length; i++) {
-        gameDevs.push(response.results.developers[i].name);
-    }
-    $('.game-devs').text(gameDevs.join(', '));
-}
-
-function listGameRatings(response) {
     let ratings = [];
-    for (let i = 0; i < response.results.original_game_rating.length; i++) {
-        ratings.push(response.results.original_game_rating[i].name);
-    }
-    $('.game-ratings').text(ratings.join(', '));
-}
-
-function listGamePlatforms(response) {
     let platforms = [];
-    for (let i = 0; i < response.results.platforms.length; i++) {
-        platforms.push(response.results.platforms[i].name);
-    }
-    $('.game-platforms').text(platforms.join(', '));
-}
-
-function listGameGenres(response) {
     let genres = [];
-    for (let i = 0; i < response.results.genres.length; i++) {
-        genres.push(response.results.genres[i].name);
+
+    for (let i = 0; i < largestArray; i++) {       
+        if (response.results.developers[i]) {
+            gameDevs.push(response.results.developers[i].name);
+        }
+
+        if (response.results.original_game_rating[i]) {
+            ratings.push(response.results.original_game_rating[i].name);
+        }
+
+        if (response.results.platforms[i]) {
+            platforms.push(response.results.platforms[i].name);
+        }
+        
+        if (response.results.genres[i]) {
+            genres.push(response.results.genres[i].name);
+        }
     }
+
+    $('.game-devs').text(gameDevs.join(', '));
+    $('.game-ratings').text(ratings.join(', '));
+    $('.game-platforms').text(platforms.join(', '));
     $('.game-genres').text(genres.join(', '));
 }
 
@@ -286,4 +284,4 @@ function displayNoReviews() {
     `);
 }
 
-$(submitButtonHandler)
+$(submitButtonHandler);

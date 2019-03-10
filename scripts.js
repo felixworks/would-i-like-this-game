@@ -1,13 +1,9 @@
 'use strict';
 
 const apiGiantBomb = `fec6b7750ced7ec24e9ff54a9b2aeea2b573d5a8`;
-
 const twitchIdUrl = 'https://api.twitch.tv/helix/games?name=';
-
 const twitchClipUrl = 'https://api.twitch.tv/helix/clips?game_id=';
-
 const twitchStreamUrl = 'https://api.twitch.tv/helix/streams?game_id=';
-
 const options = {
     headers: {
         'Client-id': 'lzvscy091kgp5i7muvi8xhpd9uo5dc'
@@ -192,33 +188,36 @@ function fetchGameReviews(response) {
 }
 
 function renderGameInfo(response) {
-    $('.giantbomb-info').html(`
-    <img class="game-thumbnail" src="${response.results.image.thumb_url}" alt="${response.results.name} thumbnail"> 
-        <h2 class="game-title">${response.results.name}</h2>
-        <p><b>Rating:</b> <span class="game-ratings"></span></p>
-        <p><b>Developers:</b> <span class="game-devs"></span></p>
-        <p><b>Platforms:</b> <span class="game-platforms"></span></p>
-        <p><b>Genres:</b> <span class="game-genres"></span></p>
-        <p><b>Description:</b> ${response.results.deck} <a href="${response.results.site_detail_url}" target="_blank">Read More</a></p>
-        <p><b>Similar Games:</b> <span class="similar-games"></span></p>
-    `);
+    $('.game-thumbnail').attr('src', response.results.image.thumb_url).attr('alt', response.results.name + ' thumbnail');
+    $('.game-title').text(response.results.name);
+    $('.game-desc').empty().append(`<b>Description:</b> ${response.results.deck} <a href="${response.results.site_detail_url}" target="_blank">Read More</a>`);
+    // $('.giantbomb-info').html(`
+    // <img class="game-thumbnail" src="${response.results.image.thumb_url}" alt="${response.results.name} thumbnail"> 
+    // <h2 class="game-title">${response.results.name}</h2>
+    // <p><b>Rating:</b> <span class="game-ratings"></span></p>
+    // <p><b>Developers:</b> <span class="game-devs"></span></p>
+    // <p><b>Platforms:</b> <span class="game-platforms"></span></p>
+    // <p><b>Genres:</b> <span class="game-genres"></span></p>
+    // <p><b>Description:</b> ${response.results.deck} <a href="${response.results.site_detail_url}" target="_blank">Read More</a></p>
+    // <p><b>Similar Games:</b> <span class="similar-games"></span></p>
+    // `);
 }
 
 function listGameData(response) {
-    let largestArray = Math.max(response.results.developers.length, response.results.original_game_rating.length, response.results.genres.length);
+    let longestArray = Math.max(response.results.developers.length, response.results.original_game_rating.length, response.results.genres.length);
 
-    let gameDevs = [];
     let ratings = [];
+    let gameDevs = [];
     let platforms = [];
     let genres = [];
 
-    for (let i = 0; i < largestArray; i++) {       
-        if (response.results.developers[i]) {
-            gameDevs.push(response.results.developers[i].name);
-        }
-
+    for (let i = 0; i < longestArray; i++) {
         if (response.results.original_game_rating[i]) {
             ratings.push(response.results.original_game_rating[i].name);
+        }
+
+        if (response.results.developers[i]) {
+            gameDevs.push(response.results.developers[i].name);
         }
 
         if (response.results.platforms[i]) {
@@ -230,22 +229,22 @@ function listGameData(response) {
         }
     }
 
-    $('.game-devs').text(gameDevs.join(', '));
-    $('.game-ratings').text(ratings.join(', '));
-    $('.game-platforms').text(platforms.join(', '));
-    $('.game-genres').text(genres.join(', '));
+    $('.game-ratings').empty().append(`<b>Ratings:</b> ${ratings.join(', ')}`);
+    $('.game-devs').empty().append(`<b>Developers:</b> ${gameDevs.join(', ')}`);
+    $('.game-platforms').empty().append(`<b>Platforms:</b> ${platforms.join(', ')}`);
+    $('.game-genres').empty().append(`<b>Genres:</b> ${genres.join(', ')}`);
 }
 
 function listSimilarGames(response) {
     if (response.results.similar_games == null) {
-        $('.similar-games').html(`N/A`);
+        $('.similar-games').empty().append(`<b>Similar Games:</b> N/A`);
     } else {
         let simGames = [];
         for (let i = 0; i < response.results.similar_games.length; i++) {
             simGames.push(`<a href="${response.results.similar_games[i].site_detail_url}" target="_blank">${response.results.similar_games[i].name}</a>`);
         }
         let simGamesList = simGames.join(', ');
-        $('.similar-games').html(simGamesList);
+        $('.similar-games').empty().append(`<b>Similar Games:</b> ${simGamesList}`);
     }
 }
 

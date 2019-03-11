@@ -191,16 +191,6 @@ function renderGameInfo(response) {
     $('.game-thumbnail').attr('src', response.results.image.thumb_url).attr('alt', response.results.name + ' thumbnail');
     $('.game-title').text(response.results.name);
     $('.game-desc').empty().append(`<b>Description:</b> ${response.results.deck} <a href="${response.results.site_detail_url}" target="_blank">Read More</a>`);
-    // $('.giantbomb-info').html(`
-    // <img class="game-thumbnail" src="${response.results.image.thumb_url}" alt="${response.results.name} thumbnail"> 
-    // <h2 class="game-title">${response.results.name}</h2>
-    // <p><b>Rating:</b> <span class="game-ratings"></span></p>
-    // <p><b>Developers:</b> <span class="game-devs"></span></p>
-    // <p><b>Platforms:</b> <span class="game-platforms"></span></p>
-    // <p><b>Genres:</b> <span class="game-genres"></span></p>
-    // <p><b>Description:</b> ${response.results.deck} <a href="${response.results.site_detail_url}" target="_blank">Read More</a></p>
-    // <p><b>Similar Games:</b> <span class="similar-games"></span></p>
-    // `);
 }
 
 function listGameData(response) {
